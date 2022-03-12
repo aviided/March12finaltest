@@ -1,0 +1,13 @@
+create table joined_table as
+(
+select department.name as department , employee.name as  employee , employee.salary from department
+inner join employee
+on department.id = employee.departmentid);
+
+select *
+   from (
+    SELECT *, dense_rank()  OVER (PARTITION BY 
+             department order by salary DESC) AS Row_ID FROM final_table
+	) as A
+
+WHERE Row_ID  <= 3  ORDER BY department
